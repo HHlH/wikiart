@@ -1,11 +1,11 @@
 
 # Models
 
-The repository includes two CNN models for image classification.
+
+This repository contains code for training two CNN models for image classification using PyTorch. 
 
 # Data Set
-
-This repository contains code for training two CNN models for image classification using PyTorch. The models are trained on the WikiArt dataset of images labeled with 10 genres.
+ The models are trained on the WikiArt dataset of images labeled with 10 genres.
 
 Link to the original data set: https://github.com/cs-chan/ArtGAN/tree/master/WikiArt%20Dataset
 
