@@ -25,7 +25,7 @@ class ImageDataset(Dataset):
         label = self.df.iloc[index,1]
         return tensor_image, label
 
-
+# Model 1
 class ConvNet(nn.Module):
     def __init__(self):
         super(ConvNet, self).__init__()
@@ -50,6 +50,42 @@ class ConvNet(nn.Module):
         x = self.fc2(x)
         # x = F.log_softmax(x, dim=1)
         return x
+
+# Model 2
+class ConvNet(nn.Module):
+    def __init__(self):
+        super(ConvNet, self).__init__()
+        self.conv1 = nn.Conv2d(3, 16, 5) # input, output, kernal size 
+        self.conv2 = nn.Conv2d(16, 32, 5)
+        self.conv3 = nn.Conv2d(32, 32, 5)
+        self.fc1 = nn.Linear(32*114*114, 128)
+        self.fc2 = nn.Linear(128, 84)
+        self.fc3 = nn.Linear(84,10)
+        self.dp1 = nn.Dropout(0.5)
+        self.dp2 = nn.Dropout(0.5)
+        self.dp3 = nn.Dropout(0.5)
+
+    def forward(self, x):
+        x = self.conv1(x)
+        x = F.relu(x)
+        x = self.conv2(x)
+        x = F.relu(x)
+        x = self.conv3(x)
+        x = F.relu(x)
+        x = F.max_pool2d(x, 2)
+        x = self.dp1(x)
+        #print(x.shape)
+        x = x.view(-1, 32*114*114)
+        x = self.fc1(x)
+        x = F.relu(x)
+        x = self.dp2(x)
+        x = self.fc2(x)
+        x = F.relu(x)
+        x = self.dp3(x)
+        x = self.fc3(x)
+        # x = F.log_softmax(x, dim=1)
+        return x
+  
 num_workers = 12
 num_epoch = 10
 batch_size = 128
